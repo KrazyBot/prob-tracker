@@ -1,8 +1,25 @@
 doctype html
 html
   head
+    //Navbar
+    div.top
+      Nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
+        a(class="navbar-brand" href="#") Prob-Tracker
+        div(class="collapse navbar-collapse" id="navbarSupportedContent")
+          ul(class="navbar-nav mr-auto")
+            li(class="nav-item dropdown")
+              a(class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Catalogue
+              div(class="dropdown-menu" aria-labelledby="navbarDropdown")
+                a(class="dropdown-item" href="#") Test
+        div(class="pull-right")
+          ul(class="navbar-nav mr-auto")
+            li(class="nav-tem")
+              a(class="nav-link") + Add a new problem
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
   body
     block content
+    script(src="/javascripts/bootstrap.js")
+    script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js")

@@ -1,10 +1,21 @@
 {
   "name": "prob-tracker",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "A simple problem tracker and catalogue",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KrazyBot/prob-tracker.git"
+  },
+  "author": "Elliot Warren",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KrazyBot/prob-tracker/issues"
+  },
+  "homepage": "https://github.com/KrazyBot/prob-tracker#readme",
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

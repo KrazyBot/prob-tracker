@@ -10,7 +10,7 @@ var monk = require('monk');
 var db = monk('localhost:27017/problem-tracker');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var problemRouter = require('./routes/problems');
 
 var app = express();
 
@@ -24,8 +24,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//allows the use of mongo over http
+app.use(function(req,res,next){
+  req.db = db;
+  next();
+});
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/problems', problemRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

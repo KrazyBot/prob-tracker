@@ -2,5 +2,19 @@ extends layout
 
 block content
 
-  h1= title
-  p Welcome to #{title}
+
+  //Wrapper
+  #wrapper
+    //Problems
+    #problemList
+      div(class="table-responsive-sm")
+        table(class="table table-bordered")
+          thead
+            th(scope="col" width="5%") #ID
+            th(scope="col") Problem
+            th(scope="col") Solution
+            th(scope="col" width="7%") Count
+            th(scope="col" width="7%") Add Count
+          tbody
+    // /Problems
+  // /Wrapper

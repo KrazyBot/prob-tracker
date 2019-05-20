@@ -131,6 +131,8 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+#mongoDB items
+data/*
 
 dist/*
 

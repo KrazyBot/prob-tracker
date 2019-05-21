@@ -47,7 +47,48 @@ function populateTable(){
 
 //init add problem function
 function addProblem(event){
+  event.preventDefault();
 
+  //basic validation for now
+  var errorCount = 0;
+  $('#addProblem input').each(function(index,val){
+    if($(this).val() === ''){
+      errorCount++;
+    };
+  });
+  //check all forms are filled
+  if(errorCount === 0){
+    //create json for fields
+    var newProblem ={
+      'problem':$('#addProblem input#problem').val(),
+      'solution':$('#addProblem input#solution').val(),
+      'count': 1
+    }
+    //sends problem to db
+    $.ajax({
+      type: 'POST',
+      data: newProblem,
+      url: '/problems/addproblem',
+      datatype: 'JSON'
+    }).done(function(response){
+      //if success
+      if(response.msg === ''){
+        //clears fields
+        $('#addProblem input').val('');
+        //refreshes table
+        populateTable();
+      }
+      else{
+        //if error show error
+        alert('error' + response.msg);
+      }
+    });
+  }
+  else{
+    //if fields are missing
+    alert('Please fill in all fields');
+    return false;
+  }
 }
 
 

@@ -37,9 +37,12 @@ router.put('/addcount/:id',function(req,res){
     .then(function (obj){
       var newCount = obj[0].count;
       newCount = parseInt(newCount,10)+1
+
       collection.update(
         {'_id':problemToUpdate},
-        {$set : {'count' : newCount} }
+        {$set : {'count' : newCount} },function(err){
+          res.send(( err === null ) ? { msg : '' } : { msg : 'error' + err});
+        }
       )
     })
     .catch(function (error){})

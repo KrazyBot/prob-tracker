@@ -1,6 +1,25 @@
 doctype html
 html
   head
+    //modal for adding categories
+    div(class="modal fade" id="categoryAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+      div(class="modal-dialog" role="document")
+        div(class="modal-content")
+          div(class="modal-header")
+            h5(class="modal-title") New Category
+            button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+          div(class="modal-body")
+            form(id='addCategoryForm')
+            #addCategory
+              div(class="form-group row")
+                label(for="category" class="col-sm-2 col-form-label") Category:
+                div(class="col-sm-10")
+                  input(form="addCategoryForm" class="form-control" id="category")
+              div(class="modal-footer")
+                button(form="addCategoryForm" type="submit" class="btn btn-info" data-dismiss="modal" id="btnAddCategory") Add Category
+
+
     //modal for adding problems
     div(class="modal fade" id="problemAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
       div(class="modal-dialog modal-lg" role="document")
@@ -10,24 +29,24 @@ html
             button(type="button" class="close" data-dismiss="modal" aria-label="Close")
               span(aria-hidden="true") &times;
           div(class="modal-body")
-            form(id='addForm')
+            form(id='addProblemForm')
             #addProblem
               div(class="form-group row")
                 label(for="problem" class="col-sm-2 col-form-label") Problem:
                 div(class="col-sm-10")
-                  textarea(form="addForm" class="form-control" id="problem" rows="5")
+                  textarea(form="addProblemForm" class="form-control" id="problem" rows="5")
               div(class="form-group row")
                 label(for="solution" class="col-sm-2 col-form-label") Solution:
                 div(class="col-sm-10")
-                  textarea(form="addForm" class="form-control" id="solution" rows="5")
+                  textarea(form="addProblemForm" class="form-control" id="solution" rows="5")
               div(class="form-group row")
                 label(for="category" class="col-sm-2 col-form-label") Category:
                 div(class="col-sm-5")
-                  select(form="addForm" class="form-control" id="category")
+                  select(form="addProblemForm" class="form-control" id="category")
 
               div(class="modal-footer")
 
-                button(type="submit" class="btn btn-info" data-dismiss="modal" id="btnAddProblem") Add Problem
+                button(form="addProblemForm" type="submit" class="btn btn-info" data-dismiss="modal" id="btnAddProblem") Add Problem
     //Navbar
     div.top
       Nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
@@ -39,8 +58,12 @@ html
                 div(class="dropdown-menu" aria-labelledby="navbarDropdown")
 
         div(class="pull-right")
-          ul(class="navbar-nav mr-auto")
-            li(class="nav-tem")
+          ul(class="navbar-nav")
+            li(class="nav-item")
+              button(type="button" class="btn btn-light" data-toggle="modal" data-target="#categoryAdd") +  Categories
+              &nbsp;
+              &nbsp;
+            li(class="nav-item")
               button(type="button" class="btn btn-light" data-toggle="modal" data-target="#problemAdd") +  Add a new problem
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')

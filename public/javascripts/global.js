@@ -64,6 +64,51 @@ function populateTable(){
   });
 };
 
+//init add category function
+function addCategory(event){
+  event.preventDefault();
+
+  //basic validation for now
+  var errorCount = 0;
+  $('#addCategory input').each(function(index,val){
+    if($(this).val() === ''){
+      errorCount++;
+    };
+  });
+  //check all forms are filled
+  if(errorCount === 0){
+    //create json for fields
+    var newCategory ={
+      'category':$('#addCategory input#category').val()
+    }
+    //sends problem to db
+    $.ajax({
+      type: 'POST',
+      data: newCategory,
+      url: '/categories/addcategory',
+      datatype: 'JSON'
+    }).done(function(response){
+      //if success
+      if(response.msg === ''){
+        //clears fields
+        $('#addCategory input').val('');
+        //refreshes table
+        populateTable();
+      }
+      else{
+        //if error show error
+        alert('error' + response.msg);
+      }
+    });
+  }
+  else{
+    //if fields are missing
+    alert('Please fill in all fields');
+    return false;
+  }
+  populateCategories();
+}
+
 //init add problem function
 function addProblem(event){
   event.preventDefault();
@@ -154,5 +199,6 @@ function addCount(event){
 
 //add problem button on click
 $('#btnAddProblem').on('click', addProblem );
+$('#btnAddCategory').on('click', addCategory );
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );

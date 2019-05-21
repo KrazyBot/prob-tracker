@@ -2,7 +2,7 @@
   "name": "prob-tracker",
   "version": "1.0.0",
   "description": "A simple problem tracker and catalogue",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "nodemon ./bin/www"
   },

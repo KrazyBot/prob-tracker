@@ -3,6 +3,7 @@ var problemListData = [];
 //On DOM ready
 $(document).ready(function() {
   populateTable();
+  populateCategories();
 });
 //Sorts Data based off value
 function sortBy(data, property){
@@ -19,6 +20,24 @@ function sortBy(data, property){
   };
   return sortable;
 }
+
+//init list all categories
+function populateCategories(){
+  var problemcategories = '';
+  var cataloguecategories = '';
+  $.getJSON( '/categories/categorylist' ,function( data ){
+    //for each item in db
+    $.each(data,function(){
+      cataloguecategories += '<a class="dropdown-item" href="#">' + this.category +'</a>'
+      problemcategories += '<option>'+ this.category +'</option>';
+    });
+
+    //put table content in the table
+    $('#addProblem div div select').html(problemcategories);
+    $('#listcategories a div').html(cataloguecategories);
+  });
+}
+
 
 //init list all function
 function populateTable(){
@@ -62,6 +81,7 @@ function addProblem(event){
     var newProblem ={
       'problem':$('#addProblem textarea#problem').val(),
       'solution':$('#addProblem textarea#solution').val(),
+      'category':$('#addProblem select#category').val(),
       'count': 1
     }
     //sends problem to db
@@ -133,6 +153,6 @@ function addCount(event){
 }
 
 //add problem button on click
-$('#btnAdd').on('click', addProblem );
+$('#btnAddProblem').on('click', addProblem );
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );

@@ -35,8 +35,8 @@ function populateTable(){
       tableContent += '<td>'+ this[1].solution +'</td>';
       tableContent += '<td>'+ this[1].count +'</td>';
 
-      tableContent += '<td><a href="#" class="linkaddcount" rel="' + this[1]._id + '">x</td>';
-      tableContent += '<td><a href="#" class="linkdeleteproblem" rel="' + this[1]._id + '">x</td>';
+      tableContent += '<td><center><button class="btn btn-light linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
+      tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
 
       tableContent += '</tr>';
     });
@@ -91,6 +91,30 @@ function addProblem(event){
   }
 }
 
+//init del problem function
+function deleteProblem(event){
+  event.preventDefault();
+  //asks the user if they're sure
+  var confirmation = confirm('Are you sure you want to delete this item?');
+    //if user confirms
+  if(confirmation === true){
+    $.ajax({
+      type: 'DELETE',
+      url: '/problems/deleteproblem/' + $(this).attr('rel')
+    }).done(function(response){
+      //successful blank message
+      if(response.msg === ''){
+      }else{
+        alert('Error: '+ response.msg);
+      }
+      populateTable();
+    });
+  }else{
+    //if they cancel
+    return false;
+  }
+};
 
 //add problem button on click
 $('#btnAdd').on('click', addProblem );
+$('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );

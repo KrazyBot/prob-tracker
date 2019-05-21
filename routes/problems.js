@@ -19,4 +19,13 @@ router.post('/addproblem',function(req,res){
     );
   });
 });
+//Delete request
+router.delete('/deleteproblem/:id',function(req,res){
+  var db = req.db;
+  var collection = db.get('problemlist');
+  var problemToDelete = req.params.id;
+  collection.remove({'_id':problemToDelete},function(err){
+    res.send(( err === null ) ? { msg : '' } : { msg : 'error' + err});
+  });
+});
 module.exports = router;

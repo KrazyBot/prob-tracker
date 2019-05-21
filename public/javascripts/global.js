@@ -49,14 +49,13 @@ function populateTable(){
     //for each item in db
     $.each(sortedData,function(){
       tableContent += '<tr>';
-      tableContent += '<td>#</td>';
       tableContent += '<td>'+ this[1].problem +'</td>';
       tableContent += '<td>'+ this[1].solution +'</td>';
       tableContent += '<td>'+ this[1].count +'</td>';
 
       tableContent += '<td><center><button class="btn btn-light linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
+      tableContent += '<td><button class="btn btn-info linkeditproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
       tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
-
       tableContent += '</tr>';
     });
     //put table content in the table

@@ -115,6 +115,24 @@ function deleteProblem(event){
   }
 };
 
+//init add count function
+function addCount(event){
+  event.preventDefault();
+
+  $.ajax({
+    type: 'PUT',
+    url: '/problems/addcount/' + $(this).attr('rel')
+  }).done(function(response){
+    //successful blank message
+    if(response.msg === ''){
+    }else{
+      alert('Error: '+ response.msg);
+    }
+  });
+  populateTable();
+}
+
 //add problem button on click
 $('#btnAdd').on('click', addProblem );
+$('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );

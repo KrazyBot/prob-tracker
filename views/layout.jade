@@ -11,16 +11,17 @@ html
               span(aria-hidden="true") &times;
           div(class="modal-body")
             form
+            #addProblem
               div(class="form-group row")
                 label(for="colFormLabel" class="col-sm-2 col-form-label") Problem:
                 div(class="col-sm-10")
-                  input(class="form-control" id="colFormLabel")
+                  input(class="form-control" id="problem")
               div(class="form-group row")
                 label(for="colFormLabel" class="col-sm-2 col-form-label") Solution:
                 div(class="col-sm-10")
-                  input(class="form-control" id="colFormLabel")
+                  input(class="form-control" id="solution")
               div(class="modal-footer")
-                button(type="submit" class="btn btn-info" data-dismiss="modal") Add Problem
+                button(type="submit" class="btn btn-info" data-dismiss="modal" id="btnAdd") Add Problem
     //Navbar
     div.top
       Nav(class="navbar navbar-expand-lg navbar-dark bg-dark")

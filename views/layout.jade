@@ -1,6 +1,26 @@
 doctype html
 html
   head
+    //modal
+    div(class="modal fade" id="problemAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+      div(class="modal-dialog modal-lg" role="document")
+        div(class="modal-content")
+          div(class="modal-header")
+            h5(class="modal-title") New Problem
+            button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
+          div(class="modal-body")
+            form
+              div(class="form-group row")
+                label(for="colFormLabel" class="col-sm-2 col-form-label") Problem:
+                div(class="col-sm-10")
+                  input(class="form-control" id="colFormLabel")
+              div(class="form-group row")
+                label(for="colFormLabel" class="col-sm-2 col-form-label") Solution:
+                div(class="col-sm-10")
+                  input(class="form-control" id="colFormLabel")
+              div(class="modal-footer")
+                button(type="submit" class="btn btn-info" data-dismiss="modal") Add Problem
     //Navbar
     div.top
       Nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
@@ -14,13 +34,13 @@ html
         div(class="pull-right")
           ul(class="navbar-nav mr-auto")
             li(class="nav-tem")
-              a(class="nav-link") +  Add a new problem
+              button(type="button" class="btn btn-light" data-toggle="modal" data-target="#problemAdd") +  Add a new problem
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
   body
     block content
-    script(src="/javascripts/bootstrap.js")
     script(src="https://code.jquery.com/jquery-3.4.1.min.js")
+    script(src="/javascripts/bootstrap.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js")
     script(src="/javascripts/global.js")

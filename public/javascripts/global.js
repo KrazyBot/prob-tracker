@@ -18,8 +18,8 @@ function populateTable(){
       tableContent += '<td>'+ this.problem +'</td>';
       tableContent += '<td>'+ this.solution +'</td>';
       tableContent += '<td>'+ this.count +'</td>';
-      tableContent += '<td>x</td>';
-      tableContent += '<td>x</td>';
+      tableContent += '<td><a href="#" class="linkaddcount" rel="' + this._id + '">x</td>';
+      tableContent += '<td><a href="#" class="linkdeleteproblem" rel="' + this._id + '">x</td>';
       tableContent += '</tr>';
     });
     //put table content in the table

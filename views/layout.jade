@@ -10,16 +10,16 @@ html
             button(type="button" class="close" data-dismiss="modal" aria-label="Close")
               span(aria-hidden="true") &times;
           div(class="modal-body")
-            form
+            form(id='addForm')
             #addProblem
               div(class="form-group row")
                 label(for="colFormLabel" class="col-sm-2 col-form-label") Problem:
                 div(class="col-sm-10")
-                  input(class="form-control" id="problem")
+                  textarea(form="addForm" class="form-control" id="problem" rows="5")
               div(class="form-group row")
                 label(for="colFormLabel" class="col-sm-2 col-form-label") Solution:
                 div(class="col-sm-10")
-                  input(class="form-control" id="solution")
+                  textarea(form="addForm" class="form-control" id="solution" rows="5")
               div(class="modal-footer")
                 button(type="submit" class="btn btn-info" data-dismiss="modal" id="btnAdd") Add Problem
     //Navbar

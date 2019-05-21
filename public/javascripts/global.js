@@ -51,7 +51,7 @@ function addProblem(event){
 
   //basic validation for now
   var errorCount = 0;
-  $('#addProblem input').each(function(index,val){
+  $('#addProblem textarea').each(function(index,val){
     if($(this).val() === ''){
       errorCount++;
     };
@@ -60,8 +60,8 @@ function addProblem(event){
   if(errorCount === 0){
     //create json for fields
     var newProblem ={
-      'problem':$('#addProblem input#problem').val(),
-      'solution':$('#addProblem input#solution').val(),
+      'problem':$('#addProblem textarea#problem').val(),
+      'solution':$('#addProblem textarea#solution').val(),
       'count': 1
     }
     //sends problem to db
@@ -74,7 +74,7 @@ function addProblem(event){
       //if success
       if(response.msg === ''){
         //clears fields
-        $('#addProblem input').val('');
+        $('#addProblem textarea').val('');
         //refreshes table
         populateTable();
       }

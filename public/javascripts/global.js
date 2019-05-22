@@ -71,6 +71,11 @@ function updateProblem(){
       }
     });
   }
+  else{
+    //if fields are missing
+    alert('Please fill in all fields');
+    return false;
+  }
 }
 
 //init list all categories

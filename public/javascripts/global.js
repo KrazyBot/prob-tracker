@@ -35,6 +35,7 @@ function showProblemForEdit(){
   });
 }
 
+//init update problems
 function updateProblem(){
 
   //basic validation for now
@@ -96,29 +97,32 @@ function populateCategories(){
   });
 }
 
-
 //init list all function
-function populateTable(){
+function populateTable(category){
   //init tableContent
   var tableContent = '';
   //get JSON from db
-  $.getJSON( '/problems/problemlist' ,function( data ){
-    var sortedData = sortBy(data,'count');
-    //for each item in db
-    $.each(sortedData,function(){
-      tableContent += '<tr>';
-      tableContent += '<td>'+ this[1].problem +'</td>';
-      tableContent += '<td>'+ this[1].solution +'</td>';
-      tableContent += '<td>'+ this[1].count +'</td>';
+  if(category){
 
-      tableContent += '<td><center><button class="btn btn-light linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
-      tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
-      tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
-      tableContent += '</tr>';
+  }else{
+    $.getJSON( '/problems/problemlist' ,function( data ){
+      var sortedData = sortBy(data,'count');
+      //for each item in db
+      $.each(sortedData,function(){
+        tableContent += '<tr>';
+        tableContent += '<td>'+ this[1].problem +'</td>';
+        tableContent += '<td>'+ this[1].solution +'</td>';
+        tableContent += '<td>'+ this[1].count +'</td>';
+
+        tableContent += '<td><center><button class="btn btn-light linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
+        tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
+        tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
+        tableContent += '</tr>';
+      });
+      //put table content in the table
+      $('#problemList table tbody').html(tableContent);
     });
-    //put table content in the table
-    $('#problemList table tbody').html(tableContent);
-  });
+  }
 };
 
 //init add category function

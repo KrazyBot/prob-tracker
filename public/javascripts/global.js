@@ -6,6 +6,7 @@ $(document).ready(function() {
   $('#addProblem category').val('');
   $('#editProblem textarea').val('');
   $('#editProblem category').val('');
+  $('#search input').val('');
   populateTable();
   populateCategories();
 });

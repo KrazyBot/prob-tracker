@@ -63,11 +63,23 @@ function populateCategories(){
 }
 
 //init list all function
-function populateTable(category){
+function populateTable(category,searchtext){
   //init tableContent
   var tableContent = '';
   //get JSON from db
   $.getJSON( '/problems/problemlist' ,function( data ){
+    searcheddata = [];
+    if(searchtext){
+      searchtext = searchtext.toLowerCase();
+      console.log(searchtext)
+      $.each(data,function(){
+        if(this.problem.toLowerCase().includes(searchtext) || this.solution.toLowerCase().includes(searchtext)){
+          searcheddata.push(this)
+        }
+      })
+      data = searcheddata;
+    }
+
     var sortedData = sortBy(data,'count');
     if(category){
       $('#navbar nav a#title').html('Trackr' +': '+category);
@@ -295,7 +307,11 @@ $('#dropdownMenu').on('click','a.dropdown-item', function(){
   }else{
     populateTable($(this).text());
   }
-
+});
+$('#search button').on('click',function(){
+  searchtext = document.getElementById("#searchbox").value;
+  var category = retainCategory();
+  populateTable(category,searchtext);
 });
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );

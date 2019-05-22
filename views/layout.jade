@@ -86,6 +86,11 @@ html
               li(class="nav-item dropdown" id="listcategories")
                 a(class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Catalogue
                   div(class="dropdown-menu" id="dropdownMenu" aria-labelledby="navbarDropdown")
+              li(class="nav-item")
+                form(class="form-inline")
+                  #search
+                    input(id='#searchbox' class="form-control" type="search" placeholder="Search" aria-label="search")
+                    button(id='#searchbutton' type="submit" class="btn btn-light") Submit
 
           div(class="pull-right")
             ul(class="navbar-nav")

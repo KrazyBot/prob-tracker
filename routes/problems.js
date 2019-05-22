@@ -12,6 +12,31 @@ router.get('/getproblem/:id',function(req,res){
     });
 });
 
+//Editing problem with new data
+router.put('/updateproblem/:id',function(req,res){
+  var db = req.db;
+  var collection = db.get('problemlist');
+  var problemToUpdate = req.params.id;
+
+  collection.find({'_id':problemToUpdate})
+    .then(function (obj){
+      var newProblem = req.body.problem;
+      var newSolution = req.body.solution;
+      var newCategory = req.body.category;
+      collection.update(
+        {'_id':problemToUpdate},
+        {$set : {'problem' : newProblem,
+                  'solution':newSolution,
+                  'category':newCategory} },function(err){
+          res.send(( err === null ) ? { msg : '' } : { msg : 'error' + err});
+        }
+      )
+    })
+    .catch(function (error){})
+
+})
+
+
 //GetReq Get all problems
 router.get('/problemlist',function(req,res){
   var db = req.db;

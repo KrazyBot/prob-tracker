@@ -24,12 +24,49 @@ function sortBy(data, property){
 //init edit problem
 function showProblemForEdit(){
   $.getJSON( '/problems/getproblem/'+ $(this).attr('rel'),function( data ){
-    console.log(data)
     $('#editProblem div div textarea#editproblem').val(data.problem);
     $('#editProblem div div textarea#editsolution').val(data.solution);
     $('#editProblem div div select#editcategory').val(data.category);
     $('#editProblem div div input#ID').val(data._id);
   });
+}
+
+function updateProblem(){
+
+  //basic validation for now
+  var errorCount = 0;
+  $('#editProblem textarea').each(function(index,val){
+    if($(this).val() === ''){
+      errorCount++;
+    };
+  });
+  //check all forms are filled
+  if(errorCount === 0){
+    //create json for fields
+    var newProblem ={
+      'ID':$('#editProblem input#ID').val(),
+      'problem':$('#editProblem textarea#editproblem').val(),
+      'solution':$('#editProblem textarea#editsolution').val(),
+      'category':$('#editProblem select#editcategory').val()
+    }
+    //sends problem to db
+    $.ajax({
+      type: 'PUT',
+      data: newProblem,
+      url: '/problems/updateproblem/'+newProblem.ID,
+      datatype: 'JSON'
+    }).done(function(response){
+      //if success
+      if(response.msg === ''){
+        //refreshes table
+        populateTable();
+      }
+      else{
+        //if error show error
+        alert('error' + response.msg);
+      }
+    });
+  }
 }
 
 //init list all categories
@@ -211,6 +248,7 @@ function addCount(event){
 //add problem button on click
 $('#btnAddProblem').on('click', addProblem );
 $('#btnAddCategory').on('click', addCategory );
+$('#btnEditProblem').on('click' ,updateProblem);
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );
 $('#problemList div table tbody').on('click', 'tr td button.linkeditproblem', showProblemForEdit );

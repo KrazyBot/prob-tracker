@@ -45,7 +45,8 @@ function populateCategories(){
       cataloguecategories += '<a class="dropdown-item categoryOption" href="#">' + this.category +'</a>'
       problemcategories += '<option>'+ this.category +'</option>';
     });
-
+      cataloguecategories += '<div class="dropdown-divider"></div>'
+      cataloguecategories += '<a class="dropdown-item categoryOption" href="#">' + 'All' +'</a>'
     //put table content in the table
     $('#editProblem div div select').html(problemcategories);
     $('#addProblem div div select').html(problemcategories);
@@ -278,7 +279,12 @@ $('#btnAddProblem').on('click', addProblem );
 $('#btnAddCategory').on('click', addCategory );
 $('#btnEditProblem').on('click' ,updateProblem);
 $('#dropdownMenu').on('click','a.dropdown-item', function(){
-  populateTable($(this).text());
+  if($(this).text() === 'All'){
+    populateTable();
+  }else{
+    populateTable($(this).text());
+  }
+
 });
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );

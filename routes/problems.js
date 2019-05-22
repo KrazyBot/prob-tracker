@@ -1,6 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
+//GetReq get specific problem from ID
+router.get('/getproblem/:id',function(req,res){
+  var db = req.db;
+  var collection = db.get('problemlist')
+  var problemToEdit = req.params.id;
+  collection.find({'_id':problemToEdit})
+    .then(function(obj){
+      res.json(obj[0])
+    });
+});
 
 //GetReq Get all problems
 router.get('/problemlist',function(req,res){

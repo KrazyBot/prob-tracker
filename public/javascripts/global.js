@@ -21,6 +21,17 @@ function sortBy(data, property){
   return sortable;
 }
 
+//init edit problem
+function showProblemForEdit(){
+  $.getJSON( '/problems/getproblem/'+ $(this).attr('rel'),function( data ){
+    console.log(data)
+    $('#editProblem div div textarea#editproblem').val(data.problem);
+    $('#editProblem div div textarea#editsolution').val(data.solution);
+    $('#editProblem div div select#editcategory').val(data.category);
+    $('#editProblem div div input#ID').val(data._id);
+  });
+}
+
 //init list all categories
 function populateCategories(){
   var problemcategories = '';
@@ -33,6 +44,7 @@ function populateCategories(){
     });
 
     //put table content in the table
+    $('#editProblem div div select').html(problemcategories);
     $('#addProblem div div select').html(problemcategories);
     $('#listcategories a div').html(cataloguecategories);
   });
@@ -54,7 +66,7 @@ function populateTable(){
       tableContent += '<td>'+ this[1].count +'</td>';
 
       tableContent += '<td><center><button class="btn btn-light linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
-      tableContent += '<td><button class="btn btn-info linkeditproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
+      tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
       tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
       tableContent += '</tr>';
     });
@@ -201,3 +213,4 @@ $('#btnAddProblem').on('click', addProblem );
 $('#btnAddCategory').on('click', addCategory );
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );
+$('#problemList div table tbody').on('click', 'tr td button.linkeditproblem', showProblemForEdit );

@@ -41,8 +41,8 @@ router.put('/updateproblem/:id',function(req,res){
 router.get('/problemlist',function(req,res){
   var db = req.db;
   var collection = db.get('problemlist');
-  collection.find({},{},function(e,docs){
-    res.json(docs);
+  collection.find({},function(e,data){
+    res.json(data);
   });
 });
 //PostReq Add new problem
@@ -72,8 +72,7 @@ router.put('/addcount/:id',function(req,res){
   collection.find({'_id':problemToUpdate})
     .then(function (obj){
       var newCount = obj[0].count;
-      newCount = parseInt(newCount,10)+1
-
+      newCount = parseInt(newCount)+1
       collection.update(
         {'_id':problemToUpdate},
         {$set : {'count' : newCount} },function(err){
@@ -81,7 +80,9 @@ router.put('/addcount/:id',function(req,res){
         }
       )
     })
-    .catch(function (error){})
+    .catch(function (error){
+      console.log(error)
+    })
 
 })
 module.exports = router;

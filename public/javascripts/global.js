@@ -24,7 +24,7 @@ function sortBy(data, property){
   };
   return sortable;
 }
-
+//init retain category
 function retainCategory(){
   var currentCategory = $('#navbar nav a#title').html().replace('Trackr','').replace(': ','');
   if(currentCategory === ''){
@@ -91,7 +91,6 @@ function populateTable(category){
         tableContent += '<td>'+ this[1].problem +'</td>';
         tableContent += '<td>'+ this[1].solution +'</td>';
         tableContent += '<td>'+ this[1].count +'</td>';
-
         tableContent += '<td><center><button class="btn btn-light linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
         tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
         tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
@@ -280,9 +279,10 @@ function addCount(event){
     }else{
       alert('Error: '+ response.msg);
     }
+    var currentCategory = retainCategory();
+    populateTable(currentCategory);
   });
-  var currentCategory = retainCategory();
-  populateTable(currentCategory);
+
 }
 
 //add problem button on click

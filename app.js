@@ -3,11 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+//init dotenv
+const dotenv = require('dotenv');
+dotenv.config();
 //Database init
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/problem-tracker');
+var db = monk(process.env.DBURL + ':' + process.env.DBPORT + '/' + process.env.DBNAME);
 
 var indexRouter = require('./routes/index');
 var problemRouter = require('./routes/problems');

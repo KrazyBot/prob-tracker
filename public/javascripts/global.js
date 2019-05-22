@@ -35,6 +35,67 @@ function showProblemForEdit(){
   });
 }
 
+//init list all categories
+function populateCategories(){
+  var problemcategories = '';
+  var cataloguecategories = '';
+  $.getJSON( '/categories/categorylist' ,function( data ){
+    //for each item in db
+    $.each(data,function(){
+      cataloguecategories += '<a class="dropdown-item categoryOption" href="#">' + this.category +'</a>'
+      problemcategories += '<option>'+ this.category +'</option>';
+    });
+
+    //put table content in the table
+    $('#editProblem div div select').html(problemcategories);
+    $('#addProblem div div select').html(problemcategories);
+    $('#listcategories a div').html(cataloguecategories);
+  });
+}
+
+//init list all function
+function populateTable(category){
+  //init tableContent
+  var tableContent = '';
+  //get JSON from db
+  $.getJSON( '/problems/problemlist' ,function( data ){
+    var sortedData = sortBy(data,'count');
+    if(category){
+      $('#navbar nav a#title').html('Trackr' +': '+category);
+      $.each(sortedData,function(){
+        if(this[1].category === category){
+          tableContent += '<tr>';
+          tableContent += '<td>'+ this[1].problem +'</td>';
+          tableContent += '<td>'+ this[1].solution +'</td>';
+          tableContent += '<td>'+ this[1].count +'</td>';
+
+          tableContent += '<td><center><button class="btn btn-light linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
+          tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
+          tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
+          tableContent += '</tr>';
+        }
+      });
+    }else{
+      $('#navbar nav a#title').html('Trackr');
+      $.each(sortedData,function(){
+        tableContent += '<tr>';
+        tableContent += '<td>'+ this[1].problem +'</td>';
+        tableContent += '<td>'+ this[1].solution +'</td>';
+        tableContent += '<td>'+ this[1].count +'</td>';
+
+        tableContent += '<td><center><button class="btn btn-light linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
+        tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
+        tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
+        tableContent += '</tr>';
+      });
+    }
+    //for each item in db
+
+    //put table content in the table
+    $('#problemList table tbody').html(tableContent);
+  });
+};
+
 //init update problems
 function updateProblem(){
 
@@ -78,52 +139,6 @@ function updateProblem(){
     return false;
   }
 }
-
-//init list all categories
-function populateCategories(){
-  var problemcategories = '';
-  var cataloguecategories = '';
-  $.getJSON( '/categories/categorylist' ,function( data ){
-    //for each item in db
-    $.each(data,function(){
-      cataloguecategories += '<a class="dropdown-item" href="#">' + this.category +'</a>'
-      problemcategories += '<option>'+ this.category +'</option>';
-    });
-
-    //put table content in the table
-    $('#editProblem div div select').html(problemcategories);
-    $('#addProblem div div select').html(problemcategories);
-    $('#listcategories a div').html(cataloguecategories);
-  });
-}
-
-//init list all function
-function populateTable(category){
-  //init tableContent
-  var tableContent = '';
-  //get JSON from db
-  if(category){
-
-  }else{
-    $.getJSON( '/problems/problemlist' ,function( data ){
-      var sortedData = sortBy(data,'count');
-      //for each item in db
-      $.each(sortedData,function(){
-        tableContent += '<tr>';
-        tableContent += '<td>'+ this[1].problem +'</td>';
-        tableContent += '<td>'+ this[1].solution +'</td>';
-        tableContent += '<td>'+ this[1].count +'</td>';
-
-        tableContent += '<td><center><button class="btn btn-light linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
-        tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
-        tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
-        tableContent += '</tr>';
-      });
-      //put table content in the table
-      $('#problemList table tbody').html(tableContent);
-    });
-  }
-};
 
 //init add category function
 function addCategory(event){
@@ -262,6 +277,9 @@ function addCount(event){
 $('#btnAddProblem').on('click', addProblem );
 $('#btnAddCategory').on('click', addCategory );
 $('#btnEditProblem').on('click' ,updateProblem);
+$('#dropdownMenu').on('click','a.dropdown-item', function(){
+  populateTable($(this).text());
+});
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );
 $('#problemList div table tbody').on('click', 'tr td button.linkeditproblem', showProblemForEdit );

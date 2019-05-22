@@ -78,22 +78,23 @@ html
                 button(form="editProblemForm" type="submit" class="btn btn-info" data-dismiss="modal" id="btnEditProblem") Update Problem
     //Navbar
     div.top
-      Nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
-        a(class="navbar-brand" href="#") #{title}
-        div(class="collapse navbar-collapse" id="navbarSupportedContent")
-          ul(class="navbar-nav mr-auto")
-            li(class="nav-item dropdown" id="listcategories")
-              a(class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Catalogue
-                div(class="dropdown-menu" aria-labelledby="navbarDropdown")
+      #navbar
+        Nav(class="navbar navbar-expand-lg navbar-dark bg-dark")
+          a(id="title" class="navbar-brand" href="#") #{title}
+          div(class="collapse navbar-collapse" id="navbarSupportedContent")
+            ul(class="navbar-nav mr-auto")
+              li(class="nav-item dropdown" id="listcategories")
+                a(class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Catalogue
+                  div(class="dropdown-menu" id="dropdownMenu" aria-labelledby="navbarDropdown")
 
-        div(class="pull-right")
-          ul(class="navbar-nav")
-            li(class="nav-item")
-              button(type="button" class="btn btn-light" data-toggle="modal" data-target="#categoryAdd") +  Categories
-              &nbsp;
-              &nbsp;
-            li(class="nav-item")
-              button(type="button" class="btn btn-light" data-toggle="modal" data-target="#problemAdd") +  Add a new problem
+          div(class="pull-right")
+            ul(class="navbar-nav")
+              li(class="nav-item")
+                button(type="button" class="btn btn-light" data-toggle="modal" data-target="#categoryAdd") +  Categories
+                &nbsp;
+                &nbsp;
+              li(class="nav-item")
+                button(type="button" class="btn btn-light" data-toggle="modal" data-target="#problemAdd") +  Add a new problem
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')

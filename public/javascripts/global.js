@@ -25,6 +25,14 @@ function sortBy(data, property){
   return sortable;
 }
 
+function retainCategory(){
+  var currentCategory = $('#navbar nav a#title').html().replace('Trackr','').replace(': ','');
+  if(currentCategory === ''){
+    return;
+  }else{
+    return(currentCategory);
+  }
+}
 //init edit problem
 function showProblemForEdit(){
   $.getJSON( '/problems/getproblem/'+ $(this).attr('rel'),function( data ){
@@ -126,7 +134,8 @@ function updateProblem(){
       //if success
       if(response.msg === ''){
         //refreshes table
-        populateTable();
+        var currentCategory = retainCategory();
+        populateTable(currentCategory);
       }
       else{
         //if error show error
@@ -249,7 +258,8 @@ function deleteProblem(event){
       }else{
         alert('Error: '+ response.msg);
       }
-      populateTable();
+      var currentCategory = retainCategory();
+      populateTable(currentCategory);
     });
   }else{
     //if they cancel

@@ -281,7 +281,8 @@ function addCount(event){
       alert('Error: '+ response.msg);
     }
   });
-  populateTable();
+  var currentCategory = retainCategory();
+  populateTable(currentCategory);
 }
 
 //add problem button on click

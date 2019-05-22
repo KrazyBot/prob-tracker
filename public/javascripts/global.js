@@ -24,6 +24,15 @@ function sortBy(data, property){
   };
   return sortable;
 }
+
+function retainSearch(){
+  var currentSearch = document.getElementById("#searchbox").value;
+  if(currentSearch === ''){
+    return;
+  }else{
+    return(currentSearch);
+  }
+}
 //init retain category
 function retainCategory(){
   var currentCategory = $('#navbar nav a#title').html().replace('Trackr','').replace(': ','');
@@ -71,7 +80,6 @@ function populateTable(category,searchtext){
     searcheddata = [];
     if(searchtext){
       searchtext = searchtext.toLowerCase();
-      console.log(searchtext)
       $.each(data,function(){
         if(this.problem.toLowerCase().includes(searchtext) || this.solution.toLowerCase().includes(searchtext)){
           searcheddata.push(this)
@@ -145,8 +153,9 @@ function updateProblem(){
       //if success
       if(response.msg === ''){
         //refreshes table
+        var currentSearch = retainSearch();
         var currentCategory = retainCategory();
-        populateTable(currentCategory);
+        populateTable(currentCategory,currentSearch);
       }
       else{
         //if error show error
@@ -291,8 +300,9 @@ function addCount(event){
     }else{
       alert('Error: '+ response.msg);
     }
+    var currentSearch = retainSearch();
     var currentCategory = retainCategory();
-    populateTable(currentCategory);
+    populateTable(currentCategory,currentSearch);
   });
 
 }
@@ -308,7 +318,7 @@ $('#dropdownMenu').on('click','a.dropdown-item', function(){
     populateTable($(this).text());
   }
 });
-$('#search button').on('click',function(){
+$('#search input').keyup(function(){
   searchtext = document.getElementById("#searchbox").value;
   var category = retainCategory();
   populateTable(category,searchtext);

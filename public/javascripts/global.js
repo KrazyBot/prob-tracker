@@ -2,6 +2,10 @@
 var problemListData = [];
 //On DOM ready
 $(document).ready(function() {
+  $('#addProblem textarea').val('');
+  $('#addProblem category').val('');
+  $('#editProblem textarea').val('');
+  $('#editProblem category').val('');
   populateTable();
   populateCategories();
 });

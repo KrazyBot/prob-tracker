@@ -346,16 +346,27 @@ function addCount(event){
 }
 
 //add problem button on click
-$('#btnAddProblem').on('click', addProblem );
-$('#btnAddCategory').on('click', addCategory );
-$('#btnEditProblem').on('click' ,updateProblem);
+$('#btnAddProblem').on('click', function(){
+  event.preventDefault();
+  addProblem();
+});
+$('#btnAddCategory').on('click', function(){
+  event.preventDefault();
+  addCategory();
+});
+$('#btnEditProblem').on('click' ,function(){
+  event.preventDefault();
+  editProblem();
+});
 $('#dropdownMenu').on('click','a.dropdown-item', function(){
+  event.preventDefault();
   window.location.hash = this.hash+'/'+document.getElementById("#searchbox").value;
 });
 $(window).on('hashchange', function(){
   populateTable()
 })
 $('#search div button').on('click',function(){
+  event.preventDefault();
   var variables = getHash();
   window.location.hash = variables[0] +'/'+ variables[1]+'/'+document.getElementById("#searchbox").value;
 

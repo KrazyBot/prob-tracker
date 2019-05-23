@@ -358,6 +358,11 @@ $('#btnEditProblem').on('click' ,function(){
   event.preventDefault();
   editProblem();
 });
+$('#title').on('click',function(){
+  event.preventDefault();
+  var variables = getHash();
+  window.location.hash = variables[0] +'/'+ 'All' +'/'+document.getElementById("#searchbox").value;
+})
 $('#dropdownMenu').on('click','a.dropdown-item', function(){
   event.preventDefault();
   window.location.hash = this.hash+'/'+document.getElementById("#searchbox").value;

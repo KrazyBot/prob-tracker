@@ -19,5 +19,22 @@ router.post('/addcategory',function(req,res){
     );
   });
 });
+router.delete('/deletecategory/:id',function(req,res){
+  var db = req.db;
+  var collection = db.get('categories');
+  var toUpdate = db.get('problemlist');
+  var categoryToDelete = req.params.id;
+  collection.find({'_id':categoryToDelete})
+    .then(function(data){
+      collection.remove({'_id':data[0]._id})
+        .then(function(test){
+          toUpdate.update({'category':data[0].category},{$set:{'category':'Other'}},{multi:true},function(err,result){
+            res.send(
+              (err === null) ? { msg : '' } : { msg : err }
+            );
+          });
+        });
+    });
+});
 
 module.exports = router;

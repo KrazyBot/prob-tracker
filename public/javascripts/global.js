@@ -78,7 +78,7 @@ function populateTable(category,searchtext){
   if(variables[1] === undefined || variables[1] === 'All'){
     category = '';
   }else{
-    category = variables[1].replace('%20',' ')
+    category = variables[1].replace(/%20/g,' ')
   }
 
   if(category === "undefined" || category === "All"){
@@ -229,6 +229,30 @@ function addCategory(event){
   populateCategories();
 }
 
+//init delete category function
+function deleteCategory(){
+  //asks the user if they're sure
+  var confirmation = confirm('Are you sure you want to delete this item?');
+    //if user confirms
+  if(confirmation === true){
+    $.ajax({
+      type: 'DELETE',
+      url: '/categories/deletecategory/' + $(this).attr('rel')
+    }).done(function(response){
+      //successful blank message
+      if(response.msg === ''){
+      }else{
+        alert('Error: '+ response.msg);
+      }
+      populateTable();
+    });
+  }else{
+    //if they cancel
+    return false;
+  }
+  populateCategories();
+}
+
 //init add problem function
 function addProblem(event){
 
@@ -335,4 +359,5 @@ $('#search input').keyup(function(){
 });
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );
+$('#categoryList').on('click', 'button.linkdeletecategory', deleteCategory );
 $('#problemList div table tbody').on('click', 'tr td button.linkeditproblem', showProblemForEdit );

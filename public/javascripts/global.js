@@ -6,8 +6,8 @@ $(document).ready(function() {
   $('#addProblem category').val('');
   $('#editProblem textarea').val('');
   $('#editProblem category').val('');
-  $('#search input').val('');
-  var hashvalues = getHash();
+  var variables = getHash();
+  window.location.hash = variables[0] +'/'+ variables[1]+'/'+document.getElementById("#searchbox").value;
   populateTable();
   populateCategories();
 });
@@ -75,7 +75,7 @@ function populateTable(category,searchtext){
   //init tableContent
   var variables = getHash();
   //if the category hasnt been selected (such as on 1st load or click of title)
-  if(variables[1] === undefined){
+  if(variables[1] === undefined || variables[1] === 'All'){
     category = '';
   }else{
     category = variables[1].replace('%20',' ')
@@ -85,7 +85,7 @@ function populateTable(category,searchtext){
     category ='';
   }
   //if searchbox has not been used
-  if(variables[1] === undefined){
+  if(variables[2] === undefined){
     searchtext = '';
   }else{
     searchtext = variables[2].replace(/%20/g,' ')

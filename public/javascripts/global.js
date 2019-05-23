@@ -7,6 +7,9 @@ $(document).ready(function() {
   $('#editProblem textarea').val('');
   $('#editProblem category').val('');
   var variables = getHash();
+  if(variables[1] === undefined){
+    variables[1] = 'All'
+  }
   window.location.hash = variables[0] +'/'+ variables[1]+'/'+document.getElementById("#searchbox").value;
   populateTable();
   populateCategories();

@@ -1,5 +1,3 @@
-//data array
-var problemListData = [];
 //On DOM ready
 $(document).ready(function() {
   $('#addProblem textarea').val('');
@@ -10,7 +8,11 @@ $(document).ready(function() {
   if(variables[1] === undefined){
     variables[1] = 'All'
   }
-  window.location.hash = variables[0] +'/'+ variables[1]+'/'+document.getElementById("#searchbox").value;
+  if(variables[2] === undefined){
+    variables[2] = '';
+  }
+  window.location.hash = variables[0] +'/'+ variables[1]+'/'+variables[2];
+  document.getElementById("#searchbox").value = variables[2]
   populateTable();
   populateCategories();
 });

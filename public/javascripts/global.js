@@ -248,12 +248,12 @@ function deleteCategory(){
         alert('Error: '+ response.msg);
       }
       populateTable();
+      populateCategories();
     });
   }else{
     //if they cancel
     return false;
   }
-  populateCategories();
 }
 
 //init add problem function

@@ -258,8 +258,11 @@ function deleteCategory(){
 
 //init add problem function
 function addProblem(event){
-
-
+  //get current date
+  var d = new Date();
+  var month = d.getMonth()+1;
+  var day = d.getDate();
+  var date = (day<10 ? '0' :'') + day +'/'+(month<10 ? '0' : '')+ month + '/' + (day<10 ? '0' :'') + d.getFullYear();
   //basic validation for now
   var errorCount = 0;
   $('#addProblem textarea').each(function(index,val){
@@ -274,6 +277,7 @@ function addProblem(event){
       'problem':$('#addProblem textarea#problem').val(),
       'solution':$('#addProblem textarea#solution').val(),
       'category':$('#addProblem select#category').val(),
+      'datecreated': date,
       'count': 1
     }
     //sends problem to db

@@ -355,10 +355,10 @@ $('#dropdownMenu').on('click','a.dropdown-item', function(){
 $(window).on('hashchange', function(){
   populateTable()
 })
-$('#search input').keyup(function(){
+$('#search div button').on('click',function(){
   var variables = getHash();
   window.location.hash = variables[0] +'/'+ variables[1]+'/'+document.getElementById("#searchbox").value;
-  populateTable();
+
 });
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );

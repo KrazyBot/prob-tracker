@@ -7,9 +7,17 @@ $(document).ready(function() {
   $('#editProblem textarea').val('');
   $('#editProblem category').val('');
   $('#search input').val('');
+  var hashvalues = getHash();
   populateTable();
   populateCategories();
 });
+
+
+function getHash(){
+  var hashvalues = [];
+  hashvalues = location.hash.split('/');
+  return(hashvalues);
+}
 //Sorts Data based off value
 function sortBy(data, property){
   var sortable = [];
@@ -26,23 +34,6 @@ function sortBy(data, property){
   return sortable;
 }
 
-function retainSearch(){
-  var currentSearch = document.getElementById("#searchbox").value;
-  if(currentSearch === ''){
-    return;
-  }else{
-    return(currentSearch);
-  }
-}
-//init retain category
-function retainCategory(){
-  var currentCategory = $('#navbar nav a#title').html().replace('Trackr','').replace(': ','');
-  if(currentCategory === ''){
-    return;
-  }else{
-    return(currentCategory);
-  }
-}
 //init edit problem
 function showProblemForEdit(){
   $.getJSON( '/problems/getproblem/'+ $(this).attr('rel'),function( data ){
@@ -57,15 +48,22 @@ function showProblemForEdit(){
 function populateCategories(){
   var problemcategories = '';
   var cataloguecategories = '';
+  var editcategorieslist = '';
   $.getJSON( '/categories/categorylist' ,function( data ){
     //for each item in db
     $.each(data,function(){
-      cataloguecategories += '<a class="dropdown-item categoryOption" href="#">' + this.category +'</a>'
-      problemcategories += '<option>'+ this.category +'</option>';
+      if(this.category !== 'Other'){
+        editcategorieslist += '<div class="row"><div class="col-10"><input class="form-control" type="text" placeholder="'+this.category+'" readonly></input></div><div class="col-2"> <button type="button" class="btn btn-danger linkdeletecategory" rel="' + this._id + '">X</button></div></div></br>'
+        cataloguecategories += '<a class="dropdown-item categoryOption" href="#/'+this.category+'">' + this.category +'</a>'
+        problemcategories += '<option>'+ this.category +'</option>';
+      }
     });
+      problemcategories += '<option>'+ 'Other' +'</option>';
       cataloguecategories += '<div class="dropdown-divider"></div>'
-      cataloguecategories += '<a class="dropdown-item categoryOption" href="#">' + 'All' +'</a>'
+      cataloguecategories += '<a href="#/All" class="dropdown-item categoryOption">' + 'All' +'</a>'
+      cataloguecategories += '<a class="dropdown-item categoryOption" href="#/Other">' + 'Other' +'</a>'
     //put table content in the table
+    $('#categoryList').html(editcategorieslist);
     $('#editProblem div div select').html(problemcategories);
     $('#addProblem div div select').html(problemcategories);
     $('#listcategories a div').html(cataloguecategories);
@@ -75,6 +73,23 @@ function populateCategories(){
 //init list all function
 function populateTable(category,searchtext){
   //init tableContent
+  var variables = getHash();
+  //if the category hasnt been selected (such as on 1st load or click of title)
+  if(variables[1] === undefined){
+    category = '';
+  }else{
+    category = variables[1].replace('%20',' ')
+  }
+
+  if(category === "undefined" || category === "All"){
+    category ='';
+  }
+  //if searchbox has not been used
+  if(variables[1] === undefined){
+    searchtext = '';
+  }else{
+    searchtext = variables[2].replace(/%20/g,' ')
+  }
   var tableContent = '';
   //get JSON from db
   $.getJSON( '/problems/problemlist' ,function( data ){
@@ -154,9 +169,7 @@ function updateProblem(){
       //if success
       if(response.msg === ''){
         //refreshes table
-        var currentSearch = retainSearch();
-        var currentCategory = retainCategory();
-        populateTable(currentCategory,currentSearch);
+        populateTable();
       }
       else{
         //if error show error
@@ -173,7 +186,7 @@ function updateProblem(){
 
 //init add category function
 function addCategory(event){
-  event.preventDefault();
+
 
   //basic validation for now
   var errorCount = 0;
@@ -218,7 +231,7 @@ function addCategory(event){
 
 //init add problem function
 function addProblem(event){
-  event.preventDefault();
+
 
   //basic validation for now
   var errorCount = 0;
@@ -265,7 +278,7 @@ function addProblem(event){
 
 //init del problem function
 function deleteProblem(event){
-  event.preventDefault();
+
   //asks the user if they're sure
   var confirmation = confirm('Are you sure you want to delete this item?');
     //if user confirms
@@ -279,8 +292,7 @@ function deleteProblem(event){
       }else{
         alert('Error: '+ response.msg);
       }
-      var currentCategory = retainCategory();
-      populateTable(currentCategory);
+      populateTable();
     });
   }else{
     //if they cancel
@@ -290,7 +302,7 @@ function deleteProblem(event){
 
 //init add count function
 function addCount(event){
-  event.preventDefault();
+
 
   $.ajax({
     type: 'PUT',
@@ -301,9 +313,7 @@ function addCount(event){
     }else{
       alert('Error: '+ response.msg);
     }
-    var currentSearch = retainSearch();
-    var currentCategory = retainCategory();
-    populateTable(currentCategory,currentSearch);
+    populateTable();
   });
 
 }
@@ -313,16 +323,15 @@ $('#btnAddProblem').on('click', addProblem );
 $('#btnAddCategory').on('click', addCategory );
 $('#btnEditProblem').on('click' ,updateProblem);
 $('#dropdownMenu').on('click','a.dropdown-item', function(){
-  if($(this).text() === 'All'){
-    populateTable();
-  }else{
-    populateTable($(this).text());
-  }
+  window.location.hash = this.hash+'/'+document.getElementById("#searchbox").value;
 });
+$(window).on('hashchange', function(){
+  populateTable()
+})
 $('#search input').keyup(function(){
-  searchtext = document.getElementById("#searchbox").value;
-  var category = retainCategory();
-  populateTable(category,searchtext);
+  var variables = getHash();
+  window.location.hash = variables[0] +'/'+ variables[1]+'/'+document.getElementById("#searchbox").value;
+  populateTable();
 });
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
 $('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );

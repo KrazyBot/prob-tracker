@@ -2,23 +2,25 @@ doctype html
 html
   head
 
-    //modal for adding categories
+    //modal for categories
     div(class="modal fade" id="categoryAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
       div(class="modal-dialog" role="document")
         div(class="modal-content")
           div(class="modal-header")
-            h5(class="modal-title") New Category
+            h5(class="modal-title") Categories
             button(type="button" class="close" data-dismiss="modal" aria-label="Close")
               span(aria-hidden="true") &times;
           div(class="modal-body")
+            #categoryList
+
             form(id='addCategoryForm')
             #addCategory
               div(class="form-group row")
-                label(for="category" class="col-sm-2 col-form-label") Category:
                 div(class="col-sm-10")
                   input(form="addCategoryForm" class="form-control" id="category")
-              div(class="modal-footer")
-                button(form="addCategoryForm" type="submit" class="btn btn-info" data-dismiss="modal" id="btnAddCategory") Add Category
+                div(class="col-sm-2")
+                  button(form="addCategoryForm" type="submit" class="btn btn-info" id="btnAddCategory") +
+
 
 
     //modal for adding problems

@@ -1,6 +1,13 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-,h1{
+table{
+  table-layout: fixed;
+}
+td{
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+h1{
   padding:10px;
 }

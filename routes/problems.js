@@ -53,7 +53,7 @@ router.post('/addproblem',function(req,res){
     problem:req.body.problem,
     solution:req.body.solution,
     category:req.body.category,
-    datecreated:req.body.datecreated,
+    countDates:[req.body.datecreated],
     count:parseInt(req.body.count),
   },function(err,result){
     res.send(
@@ -78,16 +78,10 @@ router.post('/addcount/:id',function(req,res){
   var problemToUpdate = req.params.id;
   collection.find({'_id':problemToUpdate})
     .then(function (obj){
-      if(obj[0].countDates === undefined){
-        collection.update(
-          {'_id':problemToUpdate},
-          {$set : {'countDates' : [] } },
-          {$push: {'countDates' : req.body.dateclicked}}
-        )
-      }else{
-        console.log(req.body.dateclicked)
-        console.log(obj[0].countDates)
-      }
+      collection.update(
+        {'_id':problemToUpdate},
+        {$push: {'countDates' : req.body.dateclicked}}
+      )
       collection.update(
         {'_id':problemToUpdate},
         {$inc : {'count' : 1} },function(err){

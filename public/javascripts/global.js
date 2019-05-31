@@ -121,7 +121,7 @@ function populateTable(category,searchtext){
 
           tableContent += '<td><center><button class="btn btn-secondary linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
           tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
-          tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
+          tableContent += '<td><button class="btn btn-danger linkdisableproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
           tableContent += '</tr>';
         }
       });
@@ -134,7 +134,7 @@ function populateTable(category,searchtext){
         tableContent += '<td>'+ this[1].count +'</td>';
         tableContent += '<td><center><button class="btn btn-secondary linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
         tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
-        tableContent += '<td><button class="btn btn-danger linkdeleteproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
+        tableContent += '<td><button class="btn btn-danger linkdisableproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
         tableContent += '</tr>';
       });
     }
@@ -312,15 +312,15 @@ function addProblem(event){
 }
 
 //init del problem function
-function deleteProblem(event){
+function disableProblem(event){
 
   //asks the user if they're sure
-  var confirmation = confirm('Are you sure you want to delete this item?');
+  var confirmation = confirm('Are you sure you want to disable this item?');
     //if user confirms
   if(confirmation === true){
     $.ajax({
-      type: 'DELETE',
-      url: '/problems/deleteproblem/' + $(this).attr('rel')
+      type: 'POST',
+      url: '/problems/disableproblem/' + $(this).attr('rel')
     }).done(function(response){
       //successful blank message
       if(response.msg === ''){
@@ -395,6 +395,6 @@ $('#search div button').on('click',function(){
 
 });
 $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCount );
-$('#problemList div table tbody').on('click', 'tr td button.linkdeleteproblem', deleteProblem );
+$('#problemList div table tbody').on('click', 'tr td button.linkdisableproblem', disableProblem );
 $('#categoryList').on('click', 'button.linkdeletecategory', deleteCategory );
 $('#problemList div table tbody').on('click', 'tr td button.linkeditproblem', showProblemForEdit );

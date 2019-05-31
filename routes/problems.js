@@ -41,7 +41,7 @@ router.put('/updateproblem/:id',function(req,res){
 router.get('/problemlist',function(req,res){
   var db = req.db;
   var collection = db.get('problemlist');
-  collection.find({},function(e,data){
+  collection.find({"disabled":"False"},function(e,data){
     res.json(data);
   });
 });
@@ -55,6 +55,7 @@ router.post('/addproblem',function(req,res){
     category:req.body.category,
     countDates:[req.body.datecreated],
     count:parseInt(req.body.count),
+    disabled:"False"
   },function(err,result){
     res.send(
       (err === null) ? { msg : '' } : { msg : err }
@@ -62,18 +63,26 @@ router.post('/addproblem',function(req,res){
   });
 });
 //Delete request
-router.delete('/deleteproblem/:id',function(req,res){
+router.post('/disableproblem/:id',function(req,res){
   var db = req.db;
   var collection = db.get('problemlist');
-  var problemToDelete = req.params.id;
-  collection.remove({'_id':problemToDelete},function(err){
-    res.send(( err === null ) ? { msg : '' } : { msg : 'error' + err});
-  });
+  var problemToDisable = req.params.id;
+  collection.find({'_id':problemToDisable})
+    .then(function (obj){
+      collection.update(
+        {'_id':problemToDisable},
+        {$set: {"disabled":"True"} }
+        ,function(err){
+        res.send(( err === null ) ? { msg : '' } : { msg : 'error' + err});
+      });
+    })
+    .catch(function(error){
+      console.log(error)
+    })
 });
 //Add +1 to count
 router.post('/addcount/:id',function(req,res){
   var db = req.db;
-  console.log(req.body)
   var collection = db.get('problemlist');
   var problemToUpdate = req.params.id;
   collection.find({'_id':problemToUpdate})

@@ -49,7 +49,13 @@ router.get('/problemlist',function(req,res){
 router.post('/addproblem',function(req,res){
   var db = req.db;
   var collection = db.get('problemlist');
-  collection.insert(req.body,function(err,result){
+  collection.insert({
+    problem:req.body.problem,
+    solution:req.body.solution,
+    category:req.body.category,
+    datecreated:req.body.datecreated,
+    count:parseInt(req.body.count),
+  },function(err,result){
     res.send(
       (err === null) ? { msg : '' } : { msg : err }
     );
@@ -65,17 +71,26 @@ router.delete('/deleteproblem/:id',function(req,res){
   });
 });
 //Add +1 to count
-router.put('/addcount/:id',function(req,res){
+router.post('/addcount/:id',function(req,res){
   var db = req.db;
+  console.log(req.body)
   var collection = db.get('problemlist');
   var problemToUpdate = req.params.id;
   collection.find({'_id':problemToUpdate})
     .then(function (obj){
-      var newCount = obj[0].count;
-      newCount = parseInt(newCount)+1
+      if(obj[0].countDates === undefined){
+        collection.update(
+          {'_id':problemToUpdate},
+          {$set : {'countDates' : [] } },
+          {$push: {'countDates' : req.body.dateclicked}}
+        )
+      }else{
+        console.log(req.body.dateclicked)
+        console.log(obj[0].countDates)
+      }
       collection.update(
         {'_id':problemToUpdate},
-        {$set : {'count' : newCount} },function(err){
+        {$inc : {'count' : 1} },function(err){
           res.send(( err === null ) ? { msg : '' } : { msg : 'error' + err});
         }
       )

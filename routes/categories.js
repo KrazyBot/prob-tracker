@@ -30,7 +30,7 @@ router.delete('/deletecategory/:id',function(req,res){
         .then(function(test){
           toUpdate.update({'category':data[0].category},{$set:{'category':'Other'}},{multi:true},function(err,result){
             res.send(
-              (err === null) ? { msg : '' } : { msg : err }
+              (err === null) ? { msg : '',cat: data[0].category } : { msg : err }
             );
           });
         });

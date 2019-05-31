@@ -246,6 +246,11 @@ function deleteCategory(){
     }).done(function(response){
       //successful blank message
       if(response.msg === ''){
+        var variables = getHash();
+        if(variables[1] == response.cat){
+          variables[1] = 'All'
+          window.location.hash = variables[0] +'/'+ variables[1]+'/'+variables[2];
+        }
       }else{
         alert('Error: '+ response.msg);
       }

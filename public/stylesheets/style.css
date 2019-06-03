@@ -7,7 +7,9 @@ table{
 td{
   word-wrap: break-word;
   overflow-wrap: break-word;
+  text-align: center;
 }
+
 h1{
   padding:10px;
 }

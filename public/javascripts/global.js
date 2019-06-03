@@ -128,13 +128,12 @@ function populateTable(category,searchtext){
       $.each(sortedData,function(){
         if(this[1].category === category){
           tableContent += '<tr>';
-          tableContent += '<td>'+ this[1].problem +'</td>';
-          tableContent += '<td>'+ this[1].solution +'</td>';
+          tableContent += '<td  class="linkshowdetails btn-sm btn-link" data-toggle="modal" data-target="#details" href="#" rel="' + this[1]._id + '"><a href="#">'+ this[1].title +'</a></td>';
           tableContent += '<td>'+ this[1].count +'</td>';
 
-          tableContent += '<td><center><button class="btn btn-secondary linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
-          tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
-          tableContent += '<td><button class="btn btn-danger linkdisableproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
+          tableContent += '<td><center><button class="btn btn-sm btn-secondary linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
+          tableContent += '<td><button class="btn btn-sm btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
+          tableContent += '<td><button class="btn btn-sm btn-danger linkdisableproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
           tableContent += '</tr>';
         }
       });
@@ -142,12 +141,11 @@ function populateTable(category,searchtext){
       $('#navbar nav a#title').html('Trackr');
       $.each(sortedData,function(){
         tableContent += '<tr>';
-        tableContent += '<td><a class="linkshowdetails" data-toggle="modal" data-target="#details" href="#" rel="' + this[1]._id + '">'+ this[1].problem +'</a></td>';
-        tableContent += '<td>'+ this[1].solution +'</td>';
+        tableContent += '<td  class="linkshowdetails btn-sm btn-link" data-toggle="modal" data-target="#details" href="#" rel="' + this[1]._id + '"><a href="#">'+ this[1].title +'</a></td>';
         tableContent += '<td>'+ this[1].count +'</td>';
-        tableContent += '<td><center><button class="btn btn-secondary linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
-        tableContent += '<td><button class="btn btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
-        tableContent += '<td><button class="btn btn-danger linkdisableproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
+        tableContent += '<td><center><button class="btn btn-sm btn-secondary linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
+        tableContent += '<td><button class="btn btn-sm btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
+        tableContent += '<td><button class="btn btn-sm btn-danger linkdisableproblem" href="#"  rel="' + this[1]._id + '"><img src="/images/trashcan.svg"></img></td>';
         tableContent += '</tr>';
       });
     }
@@ -160,7 +158,7 @@ function populateTable(category,searchtext){
 
 //init update problems
 function updateProblem(){
-
+  console.log("test")
   //basic validation for now
   var errorCount = 0;
   $('#editProblem textarea').each(function(index,val){
@@ -284,7 +282,7 @@ function addProblem(event){
   var month = d.getMonth()+1;
   var day = d.getDate();
   var date = (day<10 ? '0' :'') + day +'/'+(month<10 ? '0' : '')+ month + '/' + d.getFullYear();
-  var time = d.getHours() +':'+d.getMinutes()+':'+d.getSeconds();
+  var time = (d.getHours()<10 ? '0' :'') + d.getHours() +':'+ (d.getMinutes()<10 ? '0' :'') + d.getMinutes()+':'+ (d.getSeconds()<10 ? '0' :'') + d.getSeconds();
   var datetime = date +' '+time
   //basic validation for now
   var errorCount = 0;
@@ -394,7 +392,7 @@ $('#btnAddCategory').on('click', function(){
 });
 $('#btnEditProblem').on('click' ,function(){
   event.preventDefault();
-  editProblem();
+  updateProblem();
 });
 $('#title').on('click',function(){
   event.preventDefault();
@@ -418,4 +416,4 @@ $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCo
 $('#problemList div table tbody').on('click', 'tr td button.linkdisableproblem', disableProblem );
 $('#categoryList').on('click', 'button.linkdeletecategory', deleteCategory );
 $('#problemList div table tbody').on('click', 'tr td button.linkeditproblem', showProblemForEdit );
-$('#problemList div table tbody').on('click', 'tr td a.linkshowdetails', showDetails );
+$('#problemList div table tbody').on('click', 'tr td.linkshowdetails', showDetails );

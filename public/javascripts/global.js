@@ -39,9 +39,21 @@ function sortBy(data, property){
   return sortable;
 }
 
+//init details
+function showDetails(){
+  $.getJSON( '/problems/getproblem/'+ $(this).attr('rel'),function( data ){
+    $('#detailList div div textarea#title').val(data.title);
+    $('#detailList div div textarea#problem').val(data.problem);
+    $('#detailList div div textarea#solution').val(data.solution);
+    $('#detailList div div select#category').val(data.category);
+    $('#detailList div div select#date').val(data.countDates[0]);
+  });
+}
+
 //init edit problem
 function showProblemForEdit(){
   $.getJSON( '/problems/getproblem/'+ $(this).attr('rel'),function( data ){
+    $('#editProblem div div textarea#title').val(data.title);
     $('#editProblem div div textarea#editproblem').val(data.problem);
     $('#editProblem div div textarea#editsolution').val(data.solution);
     $('#editProblem div div select#editcategory').val(data.category);
@@ -160,6 +172,7 @@ function updateProblem(){
     //create json for fields
     var newProblem ={
       'ID':$('#editProblem input#ID').val(),
+      'title':$('#editProblem textarea#title').val(),
       'problem':$('#editProblem textarea#editproblem').val(),
       'solution':$('#editProblem textarea#editsolution').val(),
       'category':$('#editProblem select#editcategory').val()
@@ -283,6 +296,7 @@ function addProblem(event){
   if(errorCount === 0){
     //create json for fields
     var newProblem ={
+      'title':$('#addProblem textarea#title').val(),
       'problem':$('#addProblem textarea#problem').val(),
       'solution':$('#addProblem textarea#solution').val(),
       'category':$('#addProblem select#category').val(),

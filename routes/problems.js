@@ -20,12 +20,14 @@ router.put('/updateproblem/:id',function(req,res){
 
   collection.find({'_id':problemToUpdate})
     .then(function (obj){
+      var newTitle = req.body.title;
       var newProblem = req.body.problem;
       var newSolution = req.body.solution;
       var newCategory = req.body.category;
       collection.update(
         {'_id':problemToUpdate},
-        {$set : {'problem' : newProblem,
+        {$set : { 'title' : newTitle,
+                  'problem' : newProblem,
                   'solution':newSolution,
                   'category':newCategory} },function(err){
           res.send(( err === null ) ? { msg : '' } : { msg : 'error' + err});
@@ -50,6 +52,7 @@ router.post('/addproblem',function(req,res){
   var db = req.db;
   var collection = db.get('problemlist');
   collection.insert({
+    title:req.body.title,
     problem:req.body.problem,
     solution:req.body.solution,
     category:req.body.category,

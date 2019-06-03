@@ -10,7 +10,27 @@ html
             button(type="button" class="close" data-dismiss="modal" aria-label="Close")
               span(aria-hidden="true") &times;
           div(class="modal-body")
-
+            form(id='detailForm')
+            #detailList
+              div(class="form-group row")
+                label(for="problem" class="col-sm-2 col-form-label") Title:
+                div(class="col-sm-10")
+                  textarea(form="detailForm" type="text" class="form-control-plaintext" id="title" rows="1" readonly)
+              div(class="form-group row")
+                label(for="problem" class="col-sm-2 col-form-label") Problem:
+                div(class="col-sm-10")
+                  textarea(form="detailForm" class="form-control-plaintext" id="problem" rows="5" readonly)
+              div(class="form-group row")
+                label(for="solution" class="col-sm-2 col-form-label") Solution:
+                div(class="col-sm-10")
+                  textarea(form="detailForm" class="form-control-plaintext" id="solution" rows="5" readonly)
+              div(class="form-group row")
+                label(for="category" class="col-sm-2 col-form-label") Category:
+                div(class="col-sm-5")
+                  input(form="detailForm" class="form-control-plaintext" id="category" readonly)
+                label(for="problem" class="col-sm-2 col-form-label") Date Created:
+                div(class="col-sm-3")
+                  input(form="detailForm" class="form-control-plaintext" id="date" readonly)
           div(class="modal-footer")
             button(class="btn btn-info" data-dismiss="modal") Close
 
@@ -48,6 +68,11 @@ html
             form(id='addProblemForm')
             #addProblem
               div(class="form-group row")
+                label(for="problem" class="col-sm-2 col-form-label") Title:
+                div(class="col-sm-10")
+                  textarea(form="addProblemForm" type="text" class="form-control" id="title" rows="1")
+
+              div(class="form-group row")
                 label(for="problem" class="col-sm-2 col-form-label") Problem:
                 div(class="col-sm-10")
                   textarea(form="addProblemForm" class="form-control" id="problem" rows="5")
@@ -74,6 +99,10 @@ html
           div(class="modal-body")
             form(id="editProblemForm")
             #editProblem
+              div(class="form-group row")
+                label(for="problem" class="col-sm-2 col-form-label") Title:
+                div(class="col-sm-10")
+                  textarea(form="editProblemForm" type="text" class="form-control" id="title" rows="1")
               div(class="form-group row")
                 label(for="problem" class="col-sm-2 col-form-label") Problem:
                 div(class="col-sm-10")

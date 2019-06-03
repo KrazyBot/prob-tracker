@@ -5,6 +5,29 @@ $(document).ready(function() {
   $('#editProblem textarea').val('');
   $('#editProblem category').val('');
   var variables = getHash();
+
+
+  if(variables[1] !== undefined){
+    if(variables[2] === undefined){
+      variables[2] = '';
+    }
+    window.location.hash = variables[0] +'/'+ variables[1]+'/'+variables[2];
+    document.getElementById("#searchbox").value = variables[2]
+    populateTable();
+  }else if(variables[2] !== undefined){
+    if(variables[1] === undefined){
+      variables[1] = 'All';
+    }
+    window.location.hash = variables[0] +'/'+ variables[1]+'/'+variables[2];
+    document.getElementById("#searchbox").value = variables[2]
+    populateTable();
+  }
+  else{
+    document.getElementById("problemTable").innerHTML = '<tr><td colspan="5">Please select a category or search for a specific problem</td></tr>'
+  }
+  populateCategories();
+
+  /*
   if(variables[1] === undefined){
     variables[1] = 'All'
   }
@@ -15,8 +38,9 @@ $(document).ready(function() {
   document.getElementById("#searchbox").value = variables[2]
   populateTable();
   populateCategories();
+  */
 });
-
+//<tr><td colspan="5">TEXT HERE</td></tr>
 
 function getHash(){
   var hashvalues = [];
@@ -124,7 +148,7 @@ function populateTable(category,searchtext){
 
     var sortedData = sortBy(data,'count');
     if(category){
-      $('#navbar nav a#title').html('Trackr' +': '+category);
+      $('#navbar nav a#title2').html('Trackr' +': '+category);
       $.each(sortedData,function(){
         if(this[1].category === category){
           tableContent += '<tr>';
@@ -138,7 +162,7 @@ function populateTable(category,searchtext){
         }
       });
     }else{
-      $('#navbar nav a#title').html('Trackr');
+      $('#navbar nav a#title2').html('Trackr');
       $.each(sortedData,function(){
         tableContent += '<tr>';
         tableContent += '<td  class="linkshowdetails btn-sm btn-link" data-toggle="modal" data-target="#details" href="#" rel="' + this[1]._id + '"><a href="#">'+ this[1].title +'</a></td>';
@@ -394,7 +418,7 @@ $('#btnEditProblem').on('click' ,function(){
   event.preventDefault();
   updateProblem();
 });
-$('#title').on('click',function(){
+$('#title2').on('click',function(){
   event.preventDefault();
   var variables = getHash();
   window.location.hash = variables[0] +'/'+ 'All' +'/'+document.getElementById("#searchbox").value;

@@ -66,7 +66,6 @@ function sortBy(data, property){
 //init details
 function showDetails(){
   $.getJSON( '/problems/getproblem/'+ $(this).attr('rel'),function( data ){
-    console.log(data)
     $('#detailList div div textarea#title').val(data.title);
     $('#detailList div div textarea#problem').val(data.problem);
     $('#detailList div div textarea#solution').val(data.solution);
@@ -152,7 +151,7 @@ function populateTable(category,searchtext){
       $.each(sortedData,function(){
         if(this[1].category === category){
           tableContent += '<tr>';
-          tableContent += '<td  class="linkshowdetails btn-sm btn-link" data-toggle="modal" data-target="#details" href="#" rel="' + this[1]._id + '"><a href="#">'+ this[1].title +'</a></td>';
+          tableContent += '<td  class="linkshowdetails btn-sm btn-link" data-toggle="modal" data-target="#details" href="#" rel="' + this[1]._id + '">'+ this[1].title +'</td>';
           tableContent += '<td>'+ this[1].count +'</td>';
 
           tableContent += '<td><center><button class="btn btn-sm btn-secondary linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
@@ -165,7 +164,7 @@ function populateTable(category,searchtext){
       $('#navbar nav a#title2').html('Trackr');
       $.each(sortedData,function(){
         tableContent += '<tr>';
-        tableContent += '<td  class="linkshowdetails btn-sm btn-link" data-toggle="modal" data-target="#details" href="#" rel="' + this[1]._id + '"><a href="#">'+ this[1].title +'</a></td>';
+        tableContent += '<td  class="linkshowdetails btn-sm btn-link" data-toggle="modal" data-target="#details" href="#" rel="' + this[1]._id + '">'+ this[1].title +'</td>';
         tableContent += '<td>'+ this[1].count +'</td>';
         tableContent += '<td><center><button class="btn btn-sm btn-secondary linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
         tableContent += '<td><button class="btn btn-sm btn-info linkeditproblem" data-toggle="modal" data-target="#problemEdit" href="#"  rel="' + this[1]._id + '"><img src="/images/pencil.svg"></img></td>';
@@ -182,7 +181,6 @@ function populateTable(category,searchtext){
 
 //init update problems
 function updateProblem(){
-  console.log("test")
   //basic validation for now
   var errorCount = 0;
   $('#editProblem textarea').each(function(index,val){

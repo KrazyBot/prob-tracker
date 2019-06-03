@@ -433,6 +433,9 @@ $(window).on('hashchange', function(){
 $('#search div button').on('click',function(){
   event.preventDefault();
   var variables = getHash();
+  if(variables[1] === undefined){
+    variables[1] = 'All'
+  }
   window.location.hash = variables[0] +'/'+ variables[1]+'/'+document.getElementById("#searchbox").value;
 
 });

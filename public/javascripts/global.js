@@ -42,11 +42,12 @@ function sortBy(data, property){
 //init details
 function showDetails(){
   $.getJSON( '/problems/getproblem/'+ $(this).attr('rel'),function( data ){
+    console.log(data)
     $('#detailList div div textarea#title').val(data.title);
     $('#detailList div div textarea#problem').val(data.problem);
     $('#detailList div div textarea#solution').val(data.solution);
-    $('#detailList div div select#category').val(data.category);
-    $('#detailList div div select#date').val(data.countDates[0]);
+    $('#detailList div div input#category').val(data.category);
+    $('#detailList div div input#date').val(data.countDates[0]);
   });
 }
 
@@ -141,7 +142,7 @@ function populateTable(category,searchtext){
       $('#navbar nav a#title').html('Trackr');
       $.each(sortedData,function(){
         tableContent += '<tr>';
-        tableContent += '<td>'+ this[1].problem +'</td>';
+        tableContent += '<td><a class="linkshowdetails" data-toggle="modal" data-target="#details" href="#" rel="' + this[1]._id + '">'+ this[1].problem +'</a></td>';
         tableContent += '<td>'+ this[1].solution +'</td>';
         tableContent += '<td>'+ this[1].count +'</td>';
         tableContent += '<td><center><button class="btn btn-secondary linkaddcount" href="#" rel="' + this[1]._id + '">+1</center></td>';
@@ -282,7 +283,7 @@ function addProblem(event){
   var d = new Date();
   var month = d.getMonth()+1;
   var day = d.getDate();
-  var date = (day<10 ? '0' :'') + day +'/'+(month<10 ? '0' : '')+ month + '/' + (day<10 ? '0' :'') + d.getFullYear();
+  var date = (day<10 ? '0' :'') + day +'/'+(month<10 ? '0' : '')+ month + '/' + d.getFullYear();
   var time = d.getHours() +':'+d.getMinutes()+':'+d.getSeconds();
   var datetime = date +' '+time
   //basic validation for now
@@ -417,3 +418,4 @@ $('#problemList div table tbody').on('click', 'tr td button.linkaddcount', addCo
 $('#problemList div table tbody').on('click', 'tr td button.linkdisableproblem', disableProblem );
 $('#categoryList').on('click', 'button.linkdeletecategory', deleteCategory );
 $('#problemList div table tbody').on('click', 'tr td button.linkeditproblem', showProblemForEdit );
+$('#problemList div table tbody').on('click', 'tr td a.linkshowdetails', showDetails );

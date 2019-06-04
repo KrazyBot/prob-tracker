@@ -9,7 +9,7 @@ dotenv.config();
 //Database init
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk(process.env.DBURL + ':' + process.env.DBPORT + '/' + process.env.DBNAME);
+var db = monk('root' + ':' +process.env.DBPASS + '@' + process.env.DBURL + ':' + process.env.DBPORT + '/' + process.env.DBNAME,{authSource:'admin'});
 
 var indexRouter = require('./routes/index');
 var problemRouter = require('./routes/problems');

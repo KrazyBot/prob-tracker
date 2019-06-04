@@ -146,3 +146,4 @@ docker-compose.yml
 Dockerfile
 pm2.json
 gulpfile*
+deploy.sh

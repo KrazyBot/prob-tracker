@@ -142,3 +142,7 @@ yarn.lock
 build/*
 
 .env
+docker-compose.yml
+Dockerfile
+pm2.json
+gulpfile*
